@@ -1,0 +1,143 @@
+@charset "utf-8";
+/* CSS Document */
+
+:root {
+    --instawp-helper-color-primary: #617822;
+    --instawp-helper-color-primary-dim: #f3ffd2;
+    --instawp-helper-color-red: #f44336;
+    --instawp-helper-color-green: #009688;
+}
+
+#wpadminbar .instawp-helper-timer {
+    position: relative;
+    min-width: 140px;
+}
+
+#wpadminbar .instawp-helper-timer > a,
+#wpadminbar .instawp-helper-timer > a:hover {
+    background: #fff !important;
+    color: #374151 !important;
+    font-weight: 600;
+    padding: 0 10px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+#wpadminbar .instawp-helper-timer .clock {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    position: relative;
+    background: #ce5347;
+    margin-right: 5px;
+}
+
+#wpadminbar .instawp-helper-timer .clock:after,
+#wpadminbar .instawp-helper-timer .clock:before {
+    position: absolute;
+    content: "";
+    transform-origin: 1px 1px;
+    background-color: #ddddff;
+    height: 2px;
+    top: 5.5px;
+    left: 5.5px;
+    border-radius: 30px;
+}
+
+#wpadminbar .instawp-helper-timer .clock:before {
+    width: 5px;
+    animation: spin 2000ms linear infinite;
+}
+
+#wpadminbar .instawp-helper-timer .clock:after {
+    width: 4px;
+    animation: spin 8000ms linear infinite;
+}
+
+
+#wpadminbar .instawp-helper-timer .timer-box {
+    background: #fff;
+    min-width: 350px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    display: flex;
+    padding: 20px;
+    box-shadow: 0 10px 87px rgba(0, 0, 0, 0.13);
+    border-radius: 12px 0 0 12px;
+    border-left: 2px solid #005E54;
+    z-index: 999999999999;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+#wpadminbar .instawp-helper-timer:hover .timer-box {
+    visibility: visible;
+    opacity: 1;
+    top: 100%;
+}
+
+#wpadminbar .instawp-helper-timer .timer-box .box-icon {
+    width: 48px;
+    height: 48px;
+    background: #E7FBF9;
+    border-radius: 50%;
+    position: relative;
+    margin-right: 12px;
+}
+
+#wpadminbar .instawp-helper-timer .timer-box .box-icon > svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#wpadminbar .instawp-helper-timer .timer-box .box-content {
+
+}
+
+#wpadminbar .instawp-helper-timer .timer-box .box-content .site-type {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #111827;
+    margin-bottom: 5px;
+}
+
+#wpadminbar .instawp-helper-timer .timer-box .box-content .time-left {
+    color: #6B7280;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+#wpadminbar .instawp-helper-timer .timer-box .box-content .time-left > .time-text {
+    color: #CE5347;
+}
+
+#wpadminbar .instawp-helper-timer .timer-box .box-content .action-buttons {
+    margin-top: 15px;
+}
+
+#wpadminbar .instawp-helper-timer .timer-box .box-content .action-buttons .button-manage {
+    padding: 2px 16px;
+    border: 1px solid #D1D5DB;
+    background: #FFFFFF;
+    display: inline-block;
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #374151;
+    font-weight: 400;
+    height: auto;
+    font-size: 14px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
