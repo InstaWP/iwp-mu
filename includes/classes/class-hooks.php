@@ -1,8 +1,6 @@
 <?php
 /**
  * Class Hooks
- *
- * @author Pluginbazar
  */
 
 use INSTAWP_HELPERS\Utils;
@@ -22,7 +20,7 @@ if ( ! class_exists( 'INSTAWP_HELPER_Hooks' ) ) {
 		 * INSTAWP_HELPER_Hooks constructor.
 		 */
 		function __construct() {
-			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_timer' ), 999 );
+			add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_timer' ), 999 ); 
 		}
 
 
