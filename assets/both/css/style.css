@@ -64,7 +64,7 @@
     top: 50%;
     right: 0;
     display: flex;
-    padding: 20px;
+    padding: 12px;
     box-shadow: 0 10px 87px rgba(0, 0, 0, 0.13);
     border-radius: 12px 0 0 12px;
     border-left: 2px solid #005E54;
@@ -120,7 +120,7 @@
 }
 
 #wpadminbar .instawp-helper-timer .timer-box .box-content .action-buttons {
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 #wpadminbar .instawp-helper-timer .timer-box .box-content .action-buttons .button-manage {

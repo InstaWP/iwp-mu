@@ -3,7 +3,7 @@
 	Plugin Name: InstaWP Helper
 	Plugin URI: https://instawp.com/
 	Description: Helper plugin for InstaWP
-	Version: 1.0.0
+	Version: 1.0.1
 	Text Domain: instawp-helper
 	Author: InstaWP Team
 	Author URI: https://instawp.com/
@@ -15,9 +15,9 @@ defined( 'ABSPATH' ) || exit;
 defined( 'INSTAWP_HELPER_PLUGIN_URL' ) || define( 'INSTAWP_HELPER_PLUGIN_URL', str_replace( ABSPATH, site_url( '/' ), dirname( __FILE__ ) ) . '/' );
 defined( 'INSTAWP_HELPER_PLUGIN_DIR' ) || define( 'INSTAWP_HELPER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 defined( 'INSTAWP_HELPER_PLUGIN_FILE' ) || define( 'INSTAWP_HELPER_PLUGIN_FILE', plugin_basename( __FILE__ ) );
-defined( 'INSTAWP_HELPER_PLUGIN_VERSION' ) || define( 'INSTAWP_HELPER_PLUGIN_VERSION', '1.0.0' );
+defined( 'INSTAWP_HELPER_PLUGIN_VERSION' ) || define( 'INSTAWP_HELPER_PLUGIN_VERSION', '1.0.1' );
 defined( 'INSTAWP_HELPER_API_BASE' ) || define( 'INSTAWP_HELPER_API_BASE', 'https://stage.instawp.io' );
-defined( 'INSTAWP_HELPER_CACHE_TIMEOUT' ) || define( 'INSTAWP_HELPER_CACHE_TIMEOUT', 600 );
+defined( 'INSTAWP_HELPER_CACHE_TIMEOUT' ) || define( 'INSTAWP_HELPER_CACHE_TIMEOUT', 1800 );
 
 if ( ! class_exists( 'INSTAWP_HELPER_Main' ) ) {
 	/**

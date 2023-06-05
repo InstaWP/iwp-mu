@@ -30,27 +30,18 @@ if ( ! function_exists( 'instawp_get_time_left' ) ) {
 	 *
 	 * @return array
 	 */
-	function instawp_get_time_left( $minutes = 0 ) {
+	function instawp_get_time_left( $seconds = 0 ) {
 
-		$minutes = (int) $minutes;
-
-		if ( empty( $minutes ) ) {
-			return array( 'days' => 0, 'hours' => 0, 'minutes' => 0, );
-		}
-
-		$days    = 0;
-		$hours   = str_pad( floor( $minutes / 60 ), 2, "0", STR_PAD_LEFT );
-		$minutes = str_pad( $minutes % 60, 2, "0", STR_PAD_LEFT );
-
-		if ( (int) $hours > 24 ) {
-			$days  = str_pad( floor( $hours / 24 ), 2, "0", STR_PAD_LEFT );
-			$hours = str_pad( $hours % 24, 2, "0", STR_PAD_LEFT );
-		}
+		$days    = floor( $seconds / ( 60 * 60 * 24 ) );
+		$hours   = floor( ( $seconds % ( 60 * 60 * 24 ) ) / ( 60 * 60 ) );
+		$minutes = floor( ( $seconds % ( 60 * 60 ) ) / 60 );
+		$seconds = $seconds % 60;
 
 		return array(
 			'days'    => $days,
 			'hours'   => $hours,
 			'minutes' => $minutes,
+			'seconds' => $seconds
 		);
 	}
 }

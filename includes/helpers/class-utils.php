@@ -67,6 +67,9 @@ class Utils {
 		$api_response = curl_exec( $curl );
 		curl_close( $curl );
 
+		error_log( 'API URL : ' . $api_url );
+		error_log( 'API Response : ' . $api_response );
+
 		return json_decode( $api_response, true );
 	}
 

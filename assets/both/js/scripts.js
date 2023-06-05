@@ -8,14 +8,7 @@
 
     function update_timer_box_clock($element) {
 
-        let timer_area = $element,
-            span_distance = timer_area.find('span.distance'),
-            distance = parseInt(span_distance.data('distance')),
-            span_days = timer_area.find('span.days'),
-            span_hours = timer_area.find('span.hours'),
-            span_minutes = timer_area.find('span.minutes'),
-            span_seconds = timer_area.find('span.seconds'),
-            days = 0, hours = 0, minutes = 0, seconds = 0, new_distance = 0;
+        let timer_area = $element, span_distance = timer_area.find('span.distance'), distance = parseInt(span_distance.data('distance')), span_days = timer_area.find('span.days'), span_hours = timer_area.find('span.hours'), span_minutes = timer_area.find('span.minutes'), span_seconds = timer_area.find('span.seconds'), days = 0, hours = 0, minutes = 0, seconds = 0, new_distance = 0;
 
         if (distance > 0) {
             days = Math.floor(distance / (60 * 60 * 24));
@@ -23,6 +16,11 @@
             minutes = Math.floor((distance % (60 * 60)) / (60));
             seconds = Math.floor((distance % (60)));
         }
+
+        days = days < 10 ? '0' + days : days;
+        hours = hours < 10 ? '0' + hours : hours;
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+        seconds = seconds < 10 ? '0' + seconds : seconds;
 
         span_days.html(days + 'd');
         span_hours.html(hours + ':');

@@ -33,17 +33,24 @@ if ( ! class_exists( 'INSTAWP_HELPER_Functions' ) ) {
 		private static function set_site_status_data() {
 
 			self::$_site_status = Utils::get_option( self::$_transient_key, array() );
+			$update_time        = Utils::get_args_option( 'update_time', self::$_site_status, '0' );
 
-			if ( ! empty( self::$_site_status ) ) {
-				$update_time = Utils::get_args_option( 'update_time', self::$_site_status, '0' );
-				if ( ( current_time( 'U' ) - $update_time ) > INSTAWP_HELPER_CACHE_TIMEOUT ) {
-					self::set_site_status();
-				}
-			} else {
+			if ( empty( self::$_site_status ) ) {
 				self::set_site_status();
+
+				return;
 			}
 
-			self::set_site_status();
+			if ( ( current_time( 'U' ) - $update_time ) > INSTAWP_HELPER_CACHE_TIMEOUT ) {
+				self::set_site_status();
+			} else {
+				$last_update_time     = (int) Utils::get_args_option( 'update_time', self::$_site_status );
+				$site_status_data     = Utils::get_args_option( 'data', self::$_site_status, array() );
+				$remaining_secs       = (int) Utils::get_args_option( 'remaining_secs', $site_status_data, 0 );
+				$actual_remaining_sec = round( ( $remaining_secs - ( current_time( 'U' ) - $last_update_time ) ) );
+
+				self::$_site_status['data']['remaining_secs'] = $actual_remaining_sec;
+			}
 		}
 
 
@@ -66,6 +73,8 @@ if ( ! class_exists( 'INSTAWP_HELPER_Functions' ) ) {
 					'current_status' => '',
 				);
 			}
+
+			$site_status_data['remaining_secs'] = (int) ( $site_status_data['remaining_mins'] ?? 0 ) * 60;
 
 			$transient_data = array(
 				'data'        => $site_status_data,
