@@ -2,7 +2,7 @@
 /*
 	Plugin Name: InstaWP Helper
 	Plugin URI: https://instawp.com/
-	Description: Helper plugin for InstaWP
+	Description: InstaWP Helper plugin to show expiry time.
 	Version: 1.0.1
 	Text Domain: instawp-helper
 	Author: InstaWP Team
