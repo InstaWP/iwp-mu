@@ -16,7 +16,7 @@ defined( 'INSTAWP_HELPER_PLUGIN_URL' ) || define( 'INSTAWP_HELPER_PLUGIN_URL', s
 defined( 'INSTAWP_HELPER_PLUGIN_DIR' ) || define( 'INSTAWP_HELPER_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 defined( 'INSTAWP_HELPER_PLUGIN_FILE' ) || define( 'INSTAWP_HELPER_PLUGIN_FILE', plugin_basename( __FILE__ ) );
 defined( 'INSTAWP_HELPER_PLUGIN_VERSION' ) || define( 'INSTAWP_HELPER_PLUGIN_VERSION', '1.0.1' );
-defined( 'INSTAWP_HELPER_API_BASE' ) || define( 'INSTAWP_HELPER_API_BASE', 'https://stage.instawp.io' );
+defined( 'INSTAWP_HELPER_API_BASE' ) || define( 'INSTAWP_HELPER_API_BASE', 'https://app.instawp.io' );
 defined( 'INSTAWP_HELPER_CACHE_TIMEOUT' ) || define( 'INSTAWP_HELPER_CACHE_TIMEOUT', 1800 );
 
 if ( ! class_exists( 'INSTAWP_HELPER_Main' ) ) {
