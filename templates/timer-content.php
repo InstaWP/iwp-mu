@@ -3,22 +3,22 @@
  * Template - Timer Content
  */
 
-use INSTAWP_HELPERS\Utils;
+use InstaWP\Connect\Helpers\Helper;
 
-$site_status        = instawp_helper()::get_site_status();
-$remaining_secs_arr = instawp_get_time_left( Utils::get_args_option( 'remaining_secs', $site_status ) );
-$remaining_days     = (int) Utils::get_args_option( 'days', $remaining_secs_arr, 0 );
-$remaining_hours    = (int) Utils::get_args_option( 'hours', $remaining_secs_arr, 0 );
-$remaining_minutes  = (int) Utils::get_args_option( 'minutes', $remaining_secs_arr, 0 );
-$current_status     = Utils::get_args_option( 'current_status', $site_status );
-$site_type          = Utils::get_args_option( 'type', $site_status );
+$site_status        = iwp_mu()::get_site_status();
+$remaining_secs_arr = iwp_get_time_left( Helper::get_args_option( 'remaining_secs', $site_status ) );
+$remaining_days     = (int) Helper::get_args_option( 'days', $remaining_secs_arr, 0 );
+$remaining_hours    = (int) Helper::get_args_option( 'hours', $remaining_secs_arr, 0 );
+$remaining_minutes  = (int) Helper::get_args_option( 'minutes', $remaining_secs_arr, 0 );
+$current_status     = Helper::get_args_option( 'current_status', $site_status );
+$site_type          = Helper::get_args_option( 'type', $site_status );
 $site_type_str      = esc_html__( 'This is a local site.', 'instawp-helper' );
-$dashboard_button   = sprintf( '<a href="%s" target="_blank" class="button button-manage">%s</a>', esc_url( INSTAWP_HELPER_API_BASE . '/register?source=wpadmin_timer' ), esc_html__( 'Claim Site', 'instawp-helper' ) );
+$dashboard_button   = sprintf( '<a href="%s" target="_blank" class="button button-manage">%s</a>', esc_url( IWP_MU_PLUGIN_API_DOMAIN . '/register?source=wpadmin_timer' ), esc_html__( 'Claim Site', 'instawp-helper' ) );
 
 if ( 'user-site' == $site_type ) {
 	$site_type_str    = ucwords( str_replace( '-', ' ', $site_type ) );
 	$site_type_str    = sprintf( esc_html__( 'This is a %s', 'instawp-helper' ), $site_type_str );
-	$dashboard_button = sprintf( '<a href="%s" target="_blank" class="button button-manage">%s</a>', INSTAWP_HELPER_API_BASE, esc_html__( 'Open Dashboard', 'instawp-helper' ) );
+	$dashboard_button = sprintf( '<a href="%s" target="_blank" class="button button-manage">%s</a>', IWP_MU_PLUGIN_API_DOMAIN, esc_html__( 'Open Dashboard', 'instawp-helper' ) );
 }
 
 ?>

@@ -1,0 +1,17 @@
+{
+    "name": "iwp-mu",
+    "version": "1.0.0",
+    "description": "MU plugin for InstaWP websites",
+    "author": "instawp",
+    "license": "ISC",
+    "devDependencies": {
+        "autoprefixer": "^10.4.19",
+        "postcss": "^8.4.39",
+        "sass": "^1.68.0",
+        "tailwindcss": "^3.4.4"
+    },
+    "scripts": {
+        "tailwind": "npx tailwindcss -i assets/scss/tailwind.css -o ./assets/css/tailwind.min.css --minify --watch",
+        "start": "sass --watch assets/scss/iwp-main.scss assets/css/style.min.css --style compressed"
+    }
+}
