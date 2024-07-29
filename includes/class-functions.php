@@ -63,8 +63,8 @@ if ( ! class_exists( 'INSTAWP_MU_Functions' ) ) {
 		 */
 		private static function set_site_status() {
 
-//			$domain_name = str_replace( array( 'https://', 'http://' ), '', site_url() );
-			$domain_name = 'exquisite-dog-d5cfa8.instawp.xyz';
+			$domain_name = str_replace( array( 'https://', 'http://' ), '', site_url() );
+//			$domain_name = 'exquisite-dog-d5cfa8.instawp.xyz';
 			$site_status = Curl::do_curl( 'sites/get-basic-details?domain=' . $domain_name, [], [], 'GET', 'v2', false );
 
 			$site_status_data = Helper::get_args_option( 'data', $site_status, array() );

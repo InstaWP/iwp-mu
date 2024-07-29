@@ -4,7 +4,7 @@
 
 .iwp-dashboard {
     position: relative;
-    width: calc(100% - 20px);
+    //width: calc(100% - 20px);
 
     img {
         width: 100%;
@@ -251,6 +251,24 @@
                 top: 100%;
             }
         }
+    }
+}
+
+.welcome-panel {
+    position: relative;
+    overflow: auto;
+    margin: 0;
+    background-color: transparent;
+    font-size: 14px;
+    line-height: 1.3;
+    clear: both;
+
+    .welcome-panel-close {
+        display: none;
+    }
+
+    .welcome-panel-content {
+        display: none;
     }
 }
 

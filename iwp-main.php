@@ -19,8 +19,11 @@ class IWP_MU_Main {
 	public function __construct() {
 		self::$_script_version = defined( 'WP_DEBUG' ) && WP_DEBUG ? current_time( 'U' ) : IWP_MU_PLUGIN_VERSION;
 
+		remove_action( 'welcome_panel', 'wp_welcome_panel', 10 );
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-		add_action( 'admin_notices', array( $this, 'display_dashboard' ) );
+//		add_action( 'admin_notices', array( $this, 'display_dashboard' ) );
+		add_action( 'welcome_panel', array( $this, 'display_dashboard' ), 10 );
 		add_action( 'admin_init', array( $this, 'handle_dismissible_action' ) );
 		add_action( 'wp_ajax_iwp_install_plugin', array( $this, 'ajax_install_plugin' ) );
 	}

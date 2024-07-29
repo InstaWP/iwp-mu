@@ -75,7 +75,7 @@ $minutes     = floor( ( $diff_in_sec % ( 60 * 60 ) ) / 60 );
 
 ?>
 
-<div class="iwp-dashboard d-inline-block mt-12 w-full">
+<div class="iwp-dashboard d-inline-block my-6 w-full">
     <a href="<?php echo esc_url( $dismissible_url ); ?>" class="iwp-dashboard-close text-white hover:text-white focus:text-white active:text-white flex justify-between items-center">
         <span class="font-inter text-sm pr-1.5 line leading-6"><?php esc_html_e( 'Dismiss', 'iwp-mu' ); ?></span>
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
