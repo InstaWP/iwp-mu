@@ -14,48 +14,48 @@ if ( $welcome_panel_dismissed !== false ) {
 }
 
 $iwp_welcome_details = Option::get_option( 'iwp_welcome_details' );
-$iwp_welcome_details = array(
-	'site'     => array(
-		'username'         => 'jaedm97',
-		'password'         => 'FL7cMdPY',
-		'temporary'        => true,
-		'expiry'           => 1721113943,
-		'reserve_site_url' => 'https://instawp.com',
-		'manage_site_url'  => 'https://instawp.com/manage',
-	),
-	'partners' => array(
-		array(
-			'name'        => 'Omnisend',
-			'logo_url'    => 'https://www.omnisend.com/wp-content/uploads/2022/07/cropped-favi-32x32.png',
-			'description' => 'Email Marketing WordPress plugin for WooCommerce by Omnisend',
-			'slug'        => 'omnisend-connect',
-			'plugin_file' => 'omnisend-connect/omnisend-woocommerce.php',
-			'zip_url'     => '',
-			'cta_text'    => 'Check Offer',
-			'cta_link'    => 'https://www.omnisend.com/',
-		),
-		array(
-			'name'        => 'Yoast SEO',
-			'logo_url'    => 'https://ps.w.org/wordpress-seo/assets/icon-256x256.gif?rev=3112542',
-			'description' => 'Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.',
-			'slug'        => 'wordpress-seo',
-			'plugin_file' => 'wordpress-seo/wp-seo.php',
-			'zip_url'     => '',
-			'cta_text'    => 'Check Offer',
-			'cta_link'    => 'https://yoa.st/1uk',
-		),
-		array(
-			'name'        => 'Elementor',
-			'logo_url'    => 'https://elementor.com/wp-content/uploads/2021/04/elementor-favicon-512.png',
-			'description' => 'Elementor Website Builder – More than Just a Page Builder',
-			'slug'        => 'elementor',
-			'plugin_file' => 'elementor/elementor.php',
-			'zip_url'     => '',
-			'cta_text'    => 'Check Offer',
-			'cta_link'    => 'Elementor.com',
-		),
-	),
-);
+//$iwp_welcome_details = array(
+//	'site'     => array(
+//		'username'         => 'jaedm97',
+//		'password'         => 'FL7cMdPY',
+//		'temporary'        => true,
+//		'expiry'           => 1721113943,
+//		'reserve_site_url' => 'https://instawp.com',
+//		'manage_site_url'  => 'https://instawp.com/manage',
+//	),
+//	'partners' => array(
+//		array(
+//			'name'        => 'Omnisend',
+//			'logo_url'    => 'https://www.omnisend.com/wp-content/uploads/2022/07/cropped-favi-32x32.png',
+//			'description' => 'Email Marketing WordPress plugin for WooCommerce by Omnisend',
+//			'slug'        => 'omnisend-connect',
+//			'plugin_file' => 'omnisend-connect/omnisend-woocommerce.php',
+//			'zip_url'     => '',
+//			'cta_text'    => 'Check Offer',
+//			'cta_link'    => 'https://www.omnisend.com/',
+//		),
+//		array(
+//			'name'        => 'Yoast SEO',
+//			'logo_url'    => 'https://ps.w.org/wordpress-seo/assets/icon-256x256.gif?rev=3112542',
+//			'description' => 'Write better content and have a fully optimized WordPress site using the Yoast SEO plugin.',
+//			'slug'        => 'wordpress-seo',
+//			'plugin_file' => 'wordpress-seo/wp-seo.php',
+//			'zip_url'     => '',
+//			'cta_text'    => 'Check Offer',
+//			'cta_link'    => 'https://yoa.st/1uk',
+//		),
+//		array(
+//			'name'        => 'Elementor',
+//			'logo_url'    => 'https://elementor.com/wp-content/uploads/2021/04/elementor-favicon-512.png',
+//			'description' => 'Elementor Website Builder – More than Just a Page Builder',
+//			'slug'        => 'elementor',
+//			'plugin_file' => 'elementor/elementor.php',
+//			'zip_url'     => '',
+//			'cta_text'    => 'Check Offer',
+//			'cta_link'    => 'Elementor.com',
+//		),
+//	),
+//);
 
 if ( empty( $iwp_welcome_details ) ) {
 	return;
