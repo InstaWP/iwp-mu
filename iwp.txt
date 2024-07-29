@@ -14,8 +14,4 @@
  * @package           instawp
  */
 
-defined( 'IWP_MU_PLUGIN_VERSION' ) || define( 'IWP_MU_PLUGIN_VERSION', '1.0.0' );
-defined( 'IWP_MU_PLUGIN_API_KEY' ) || define( 'IWP_MU_PLUGIN_API_KEY', '4QnbUjY5pJ5JQxvbvD9nkvw5wp1KWDlNdK5ouY8L' );
-defined( 'IWP_MU_PLUGIN_API_DOMAIN' ) || define( 'IWP_MU_PLUGIN_API_DOMAIN', 'https://app.instawp.io' );
-
 require_once plugin_dir_path( __FILE__ ) . 'iwp-mu/iwp-main.php';
