@@ -9,6 +9,8 @@ use InstaWP\Connect\Helpers\Option;
 $dismissible_url         = wp_nonce_url( iwp_get_current_admin_url( [ 'iwp_hide_welcome_panel' => 'yes' ] ), 'iwp_welcome_nonce', 'iwp_nonce' );
 $welcome_panel_dismissed = (bool) get_user_meta( get_current_user_id(), 'iwp_welcome_panel_dismissed', true );
 
+echo "<pre>"; print_r(  ); echo "</pre>";
+
 if ( $welcome_panel_dismissed !== false ) {
 	return;
 }

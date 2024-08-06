@@ -16,8 +16,9 @@ if ( ! function_exists( 'iwp_get_current_admin_url' ) ) {
 	 */
 	function iwp_get_current_admin_url( $query_param = [] ) {
 
-		$screen   = get_current_screen();
-		$base_url = admin_url( $screen->base . '.php' );
+//		$screen = get_current_screen();
+//		$base_url = admin_url( $screen->base . '.php' );
+		$base_url = admin_url();
 		$query    = $_SERVER['QUERY_STRING'];
 
 		if ( ! empty( $query ) ) {
