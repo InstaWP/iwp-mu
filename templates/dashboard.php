@@ -9,8 +9,6 @@ use InstaWP\Connect\Helpers\Option;
 $dismissible_url         = wp_nonce_url( iwp_get_current_admin_url( [ 'iwp_hide_welcome_panel' => 'yes' ] ), 'iwp_welcome_nonce', 'iwp_nonce' );
 $welcome_panel_dismissed = (bool) get_user_meta( get_current_user_id(), 'iwp_welcome_panel_dismissed', true );
 
-echo "<pre>"; print_r(  ); echo "</pre>";
-
 if ( $welcome_panel_dismissed !== false ) {
 	return;
 }
@@ -129,7 +127,7 @@ $minutes     = floor( ( $diff_in_sec % ( 60 * 60 ) ) / 60 );
 <!--                </a>-->
 <!--                <span class="text-sm font-inter font-medium text-redCust-100">--><?php //printf( esc_html__( 'Expiring in %s days %s hours and %s minutes', 'iwp-mu' ), $days, $hours, $minutes ); ?><!--</span>-->
             </div>
-            <div class="iwp-logo flex-none self-end">
+            <div class="iwp-logo flex-none self-end cursor-pointer">
                 <svg width="50" height="44" viewBox="0 0 50 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M41.4225 16.8945H48.365C48.4823 16.8942 48.5982 16.9266 48.7004 16.9885C48.8027 17.0505 48.8883 17.1399 48.9473 17.2476C49.007 17.3554 49.038 17.4778 49.0387 17.6026C49.0394 17.7275 49.0092 17.8503 48.9516 17.9588L36.4584 41.4547C36.2684 41.8127 35.992 42.1106 35.6574 42.3181C35.3228 42.5254 34.9428 42.635 34.5549 42.6353H29.2403C28.7976 42.6353 28.3652 42.4925 28.001 42.2259C27.6361 41.9593 27.357 41.5815 27.2 41.1425L25.8989 37.5185L25.9904 37.5838C26.4062 37.8692 26.8726 38.0608 27.3613 38.1471C27.8506 38.2333 28.3508 38.2121 28.8316 38.0849C29.3122 37.9577 29.7627 37.7271 30.1564 37.4076C30.5493 37.088 30.8767 36.6863 31.1171 36.2271L38.6137 21.9972H32.6327C32.5047 22 32.3786 21.9638 32.2692 21.8931C32.1598 21.8224 32.0713 21.72 32.0152 21.598C31.9591 21.476 31.9368 21.3395 31.9512 21.2045C31.9656 21.0697 32.0166 20.942 32.0973 20.8365L47.128 1.02141C47.2042 0.934338 47.3064 0.878104 47.4173 0.862371C47.5288 0.846637 47.6411 0.872386 47.7361 0.935191C47.831 0.997996 47.903 1.09393 47.9383 1.20652C47.9735 1.31911 47.9714 1.44131 47.9311 1.55212L41.4225 16.8945Z"
                           fill="white"/>

@@ -50,6 +50,10 @@
         }
     });
 
+    $(document).on('click', '.iwp-dashboard .iwp-logo', function () {
+        window.open('https://instawp.com?utm_source=wa_welcome_msg', '_blank');
+    });
+
     $(document).on('click', '.iwp-mu-install-plugin', function () {
         let el_install_btn = $(this),
             install_nonce = el_install_btn.data('install-nonce'),
