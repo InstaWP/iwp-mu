@@ -87,6 +87,12 @@ class IWP_MU_Main {
 	}
 
 	public function display_dashboard() {
+
+		wp_enqueue_script( 'iwp-mu-main' );
+
+		wp_enqueue_style( 'iwp-mu-tailwind' );
+		wp_enqueue_style( 'iwp-mu-style' );
+
 		require_once IWP_MU_PLUGIN_DIR . 'templates/dashboard.php';
 	}
 
@@ -98,11 +104,11 @@ class IWP_MU_Main {
 			'text_transferring' => esc_html__( 'Transferring...', 'iwp-hosting-mig' ),
 		);
 
-		wp_enqueue_script( 'iwp-mu-main', plugins_url( '/assets/js/scripts.js', __FILE__ ), array( 'jquery' ), self::$_script_version );
+		wp_register_script( 'iwp-mu-main', plugins_url( '/assets/js/scripts.js', __FILE__ ), array( 'jquery' ), self::$_script_version );
 		wp_localize_script( 'iwp-mu-main', 'iwp_mu_main', $localize_data );
 
-		wp_enqueue_style( 'iwp-mu-tailwind', IWP_MU_PLUGIN_URL . 'assets/css/tailwind.min.css', [], self::$_script_version );
-		wp_enqueue_style( 'iwp-mu-style', IWP_MU_PLUGIN_URL . 'assets/css/style.min.css', [ 'iwp-mu-tailwind' ], self::$_script_version );
+		wp_register_style( 'iwp-mu-tailwind', IWP_MU_PLUGIN_URL . 'assets/css/tailwind.min.css', [], self::$_script_version );
+		wp_register_style( 'iwp-mu-style', IWP_MU_PLUGIN_URL . 'assets/css/style.min.css', [ 'iwp-mu-tailwind' ], self::$_script_version );
 	}
 
 	public static function instance() {
