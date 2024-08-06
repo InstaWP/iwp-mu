@@ -10,7 +10,7 @@ class IWP_MU_Hooks {
 	protected static $_instance = null;
 
 	public function __construct() {
-		add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_timer' ), 999 );
+//		add_action( 'admin_bar_menu', array( $this, 'add_admin_bar_timer' ), 999 );
 	}
 
 	/**

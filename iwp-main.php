@@ -10,7 +10,6 @@ defined( 'IWP_MU_PLUGIN_DIR' ) || define( 'IWP_MU_PLUGIN_DIR', plugin_dir_path( 
 defined( 'IWP_MU_PLUGIN_URL' ) || define( 'IWP_MU_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 defined( 'IWP_MU_CACHE_TIMEOUT' ) || define( 'IWP_MU_CACHE_TIMEOUT', 1800 );
 defined( 'IWP_MU_PLUGIN_VERSION' ) || define( 'IWP_MU_PLUGIN_VERSION', '1.0.0' );
-defined( 'IWP_MU_PLUGIN_API_DOMAIN' ) || define( 'IWP_MU_PLUGIN_API_DOMAIN', 'https://app.instawp.io' );
 
 class IWP_MU_Main {
 

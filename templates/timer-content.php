@@ -13,12 +13,10 @@ $remaining_minutes  = (int) Helper::get_args_option( 'minutes', $remaining_secs_
 $current_status     = Helper::get_args_option( 'current_status', $site_status );
 $site_type          = Helper::get_args_option( 'type', $site_status );
 $site_type_str      = esc_html__( 'This is a local site.', 'instawp-helper' );
-$dashboard_button   = sprintf( '<a href="%s" target="_blank" class="button button-manage">%s</a>', esc_url( IWP_MU_PLUGIN_API_DOMAIN . '/register?source=wpadmin_timer' ), esc_html__( 'Claim Site', 'instawp-helper' ) );
 
 if ( 'user-site' == $site_type ) {
 	$site_type_str    = ucwords( str_replace( '-', ' ', $site_type ) );
 	$site_type_str    = sprintf( esc_html__( 'This is a %s', 'instawp-helper' ), $site_type_str );
-	$dashboard_button = sprintf( '<a href="%s" target="_blank" class="button button-manage">%s</a>', IWP_MU_PLUGIN_API_DOMAIN, esc_html__( 'Open Dashboard', 'instawp-helper' ) );
 }
 
 ?>

@@ -113,19 +113,19 @@ $minutes     = floor( ( $diff_in_sec % ( 60 * 60 ) ) / 60 );
 
         <div class="iwp-external-links flex items-center justify-between">
             <div class="flex items-center space-x-3 text-sm font-inter font-medium text-yellowCust-100">
-                <a href="<?php echo esc_url( Helper::get_args_option( 'manage_site_url', $iwp_details_site ) ); ?>" class="flex items-center gap-2 focus:text-yellowCust-100 hover:text-yellowCust-100 active:text-yellowCust-100 visited:text-yellowCust-100">
+                <a target="_blank" href="<?php echo esc_url( Helper::get_args_option( 'manage_site_url', $iwp_details_site ) ); ?>" class="flex items-center gap-2 focus:text-yellowCust-100 hover:text-yellowCust-100 active:text-yellowCust-100 visited:text-yellowCust-100">
                     <span><?php esc_html_e( 'Manage Site', 'iwp-mu' ); ?></span>
                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5.5 2.5H2.5C1.67157 2.5 1 3.17157 1 4V11.5C1 12.3284 1.67157 13 2.5 13H10C10.8284 13 11.5 12.3284 11.5 11.5V8.5M8.5 1H13M13 1V5.5M13 1L5.5 8.5" stroke="#F3E98D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </a>
-                <a href="<?php echo esc_url( Helper::get_args_option( 'reserve_site_url', $iwp_details_site ) ); ?>" class="flex items-center gap-2 focus:text-yellowCust-100 hover:text-yellowCust-100 active:text-yellowCust-100 visited:text-yellowCust-100">
-                    <span><?php esc_html_e( 'Reserve Site', 'iwp-mu' ); ?></span>
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5.5 2.5H2.5C1.67157 2.5 1 3.17157 1 4V11.5C1 12.3284 1.67157 13 2.5 13H10C10.8284 13 11.5 12.3284 11.5 11.5V8.5M8.5 1H13M13 1V5.5M13 1L5.5 8.5" stroke="#F3E98D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-                <span class="text-sm font-inter font-medium text-redCust-100"><?php printf( esc_html__( 'Expiring in %s days %s hours and %s minutes', 'iwp-mu' ), $days, $hours, $minutes ); ?></span>
+<!--                <a href="--><?php //echo esc_url( Helper::get_args_option( 'reserve_site_url', $iwp_details_site ) ); ?><!--" class="flex items-center gap-2 focus:text-yellowCust-100 hover:text-yellowCust-100 active:text-yellowCust-100 visited:text-yellowCust-100">-->
+<!--                    <span>--><?php //esc_html_e( 'Reserve Site', 'iwp-mu' ); ?><!--</span>-->
+<!--                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+<!--                        <path d="M5.5 2.5H2.5C1.67157 2.5 1 3.17157 1 4V11.5C1 12.3284 1.67157 13 2.5 13H10C10.8284 13 11.5 12.3284 11.5 11.5V8.5M8.5 1H13M13 1V5.5M13 1L5.5 8.5" stroke="#F3E98D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>-->
+<!--                    </svg>-->
+<!--                </a>-->
+<!--                <span class="text-sm font-inter font-medium text-redCust-100">--><?php //printf( esc_html__( 'Expiring in %s days %s hours and %s minutes', 'iwp-mu' ), $days, $hours, $minutes ); ?><!--</span>-->
             </div>
             <div class="iwp-logo flex-none self-end">
                 <svg width="50" height="44" viewBox="0 0 50 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -173,18 +173,14 @@ $minutes     = floor( ( $diff_in_sec % ( 60 * 60 ) ) / 60 );
 					$btn_text      = esc_html__( 'Install Plugin', 'iwp-mu' );
 				}
 
-//				echo "<pre>";
-//				print_r( explode( ' ', $btn_classes ) );
-//				echo "</pre>";
-
 				?>
                 <div class="<?php echo esc_attr( $classes ); ?>">
                     <div class="flex-none w-8 h-8 overflow-hidden rounded-lg">
                         <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( $name ); ?>">
                     </div>
                     <div class="min-w-0 flex-auto px-2">
-                        <h2 class="text-xl text-[#27272A] font-inter font-medium mb-1"><?php echo esc_html( $name ); ?></h2>
-                        <p class="text-[#71717A]"><?php echo esc_html( $description ); ?></p>
+                        <div class="text-[20px] leading-[30px] text-[#27272A] font-inter font-medium mb-2"><?php echo esc_html( $name ); ?></div>
+                        <div class="text-[14px] leading-[21px] text-[#71717A]"><?php echo esc_html( $description ); ?></div>
                         <div class="flex items-center gap-3 mt-4">
                             <button class="<?php echo esc_attr( $btn_classes ); ?>"
                                     data-text-installing="<?php echo esc_attr__( 'Installing...', 'iwp-mu' ); ?>"
