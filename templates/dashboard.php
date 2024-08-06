@@ -86,7 +86,7 @@ $minutes     = floor( ( $diff_in_sec % ( 60 * 60 ) ) / 60 );
     <div class="iwp-dashboard-content p-8 rounded-t-lg overflow-hidden">
         <span class="bg-primary-950"></span>
 
-        <h2 class="text-white text-2xl font-medium mb-4"><?php esc_html_e( 'Welcome to WordPress', 'iwp-mu' ); ?></h2>
+        <div class="text-white text-[24px] leading-[36px] font-medium mb-4"><?php esc_html_e( 'Welcome to WordPress', 'iwp-mu' ); ?></div>
 
         <div class="space-y-2 text-grayCust-200 mb-4 text-sm font-inter">
             <div class="flex items-center">
