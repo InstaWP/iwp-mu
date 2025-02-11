@@ -23,9 +23,12 @@ class WPConfig extends \WPConfigTransformer {
         'ABSPATH',
         'WP_HOME',
         'WP_SITEURL',
+        'WP_CACHE_KEY_SALT',
+        'COOKIE_DOMAIN',
+        'DOMAIN_CURRENT_SITE',
     ];
 
-    public function __construct( array $constants = [], $is_cli = false ) {
+    public function __construct( array $constants = [], $is_cli = false, $read_only = false ) {
         $file = ABSPATH . 'wp-config.php';
         if ( ! file_exists( $file ) ) {
             if ( @file_exists( dirname( ABSPATH ) . '/wp-config.php' ) ) {
@@ -33,7 +36,7 @@ class WPConfig extends \WPConfigTransformer {
             }
         }
 
-        parent::__construct( $file );
+        parent::__construct( $file, $read_only );
 
         $this->config_data = $constants;
         $this->is_cli      = $is_cli;
@@ -85,6 +88,7 @@ class WPConfig extends \WPConfigTransformer {
             'add'       => true,
         ];
         $content = file_get_contents( $this->wp_config_path );
+
         if ( ! trim( $content ) ) {
             throw new \Exception( 'Config file is empty.' );
         }
@@ -131,7 +135,11 @@ class WPConfig extends \WPConfigTransformer {
                 $args['raw'] = false;
             }
 
-            $this->update( 'constant', $key, $value, $args );
+            try {
+                $this->update( 'constant', $key, $value, $args );
+            } catch ( \Exception $e ) {
+                throw new \Exception( $e->getMessage() );
+            }
         }
 
         return [ 'success' => true ];
@@ -139,12 +147,17 @@ class WPConfig extends \WPConfigTransformer {
 
     public function delete() {
         $constants = array_filter( $this->config_data );
+
         if ( empty( $constants ) ) {
             throw new \Exception( 'No constants provided!' );
         }
 
         foreach ( $constants as $constant ) {
-            $this->remove( 'constant', $constant );
+            try {
+                $this->remove( 'constant', $constant );
+            } catch ( \Exception $e ) {
+                throw new \Exception( $e->getMessage() );
+            }
         }
 
         return [ 'success' => true ];

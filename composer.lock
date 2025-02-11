@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/InstaWP/connect-helpers.git",
-                "reference": "28d2f2f6f8f17aee90ca1ac26b52ef76867acf80"
+                "reference": "e476c1c74ddee1964ffd3cbb08c18d2323671633"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/InstaWP/connect-helpers/zipball/28d2f2f6f8f17aee90ca1ac26b52ef76867acf80",
-                "reference": "28d2f2f6f8f17aee90ca1ac26b52ef76867acf80",
+                "url": "https://api.github.com/repos/InstaWP/connect-helpers/zipball/e476c1c74ddee1964ffd3cbb08c18d2323671633",
+                "reference": "e476c1c74ddee1964ffd3cbb08c18d2323671633",
                 "shasum": ""
             },
             "require": {
@@ -53,20 +53,20 @@
                 "source": "https://github.com/InstaWP/connect-helpers/tree/main",
                 "issues": "https://github.com/InstaWP/connect-helpers/issues"
             },
-            "time": "2024-07-25T12:02:23+00:00"
+            "time": "2025-02-06T11:27:14+00:00"
         },
         {
             "name": "wp-cli/wp-config-transformer",
-            "version": "v1.3.6",
+            "version": "v1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-config-transformer.git",
-                "reference": "88f516f44dce1660fc4b780da513e3ca12d7d24f"
+                "reference": "9da378b5a4e28bba3bce4ff4ff04a54d8c9f1a01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/88f516f44dce1660fc4b780da513e3ca12d7d24f",
-                "reference": "88f516f44dce1660fc4b780da513e3ca12d7d24f",
+                "url": "https://api.github.com/repos/wp-cli/wp-config-transformer/zipball/9da378b5a4e28bba3bce4ff4ff04a54d8c9f1a01",
+                "reference": "9da378b5a4e28bba3bce4ff4ff04a54d8c9f1a01",
                 "shasum": ""
             },
             "require": {
@@ -76,6 +76,11 @@
                 "wp-cli/wp-cli-tests": "^4.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
             "autoload": {
                 "files": [
                     "src/WPConfigTransformer.php"
@@ -95,9 +100,9 @@
             "homepage": "https://github.com/wp-cli/wp-config-transformer",
             "support": {
                 "issues": "https://github.com/wp-cli/wp-config-transformer/issues",
-                "source": "https://github.com/wp-cli/wp-config-transformer/tree/v1.3.6"
+                "source": "https://github.com/wp-cli/wp-config-transformer/tree/v1.4.1"
             },
-            "time": "2024-05-23T06:32:14+00:00"
+            "time": "2024-10-16T12:50:47+00:00"
         }
     ],
     "packages-dev": [],

@@ -4,8 +4,8 @@ namespace InstaWP\Connect\Helpers;
 
 class Curl {
 
-	public static function do_curl( $endpoint, $body = array(), $headers = array(), $method = 'POST', $api_version = 'v2', $api_key = '' ) {
-		$api_url = Helper::get_api_domain();
+    public static function do_curl( $endpoint, $body = array(), $headers = array(), $method = 'POST', $api_version = 'v2', $api_key = '', $api_domain = '' ) {
+        $api_url = ! empty( $api_domain ) ? $api_domain : Helper::get_api_domain();
 
 		if ( empty( $api_url ) ) {
 			return array(
@@ -14,28 +14,29 @@ class Curl {
 			);
 		}
 
-		if ( ! is_bool( $api_key ) && empty( $api_key ) ) {
+		if ( empty( $api_key ) ) {
 			$api_key = Helper::get_api_key();
 		}
 
-		if ( ! is_bool( $api_key ) && empty( $api_key ) ) {
+		if ( empty( $api_key ) ) {
 			return array(
 				'success' => false,
 				'message' => esc_html__( 'Invalid or Empty API Key', 'instawp-connect' ),
 			);
 		}
 
-		$api_url = $api_url . '/api/' . $api_version . '/' . $endpoint;
+        if ( $api_version !== null ) {
+		    $api_url = $api_url . '/api/' . $api_version . '/' . $endpoint;
+        } else {
+            $api_url = $api_url . '/api/' . $endpoint;
+        }
+
 		$headers = wp_parse_args( $headers, array(
 			'Authorization' => 'Bearer ' . $api_key,
 			'Accept'        => 'application/json',
 			'Content-Type'  => 'application/json',
-			'Referer'       => site_url(),
+			'Referer'       => Helper::wp_site_url(),
 		) );
-
-		if ( is_bool( $api_key ) && $api_key === false && isset( $headers['Authorization'] ) ) {
-			unset( $headers['Authorization'] );
-		}
 
 		if ( is_bool( $method ) ) {
 			$method = $method ? 'POST' : 'GET';
