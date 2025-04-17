@@ -5,6 +5,7 @@ includes/file-manager/instawp*.php
 includes/database-manager/instawp*.php
 
 # ignore log files and databases
+composer.lock
 package-lock.json
 *.log
 *.sql

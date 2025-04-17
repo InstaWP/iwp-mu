@@ -5,7 +5,7 @@
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '60d9a36af800ef3cd13bf29727b47df8fbea086e',
+        'reference' => 'e05d230166568e3e8e6496dddc40ea2fa7a345b6',
         'name' => 'iwp/mu',
         'dev' => true,
     ),
@@ -18,7 +18,7 @@
             'aliases' => array(
                 0 => '9999999-dev',
             ),
-            'reference' => 'e476c1c74ddee1964ffd3cbb08c18d2323671633',
+            'reference' => 'b236dbe7c628c78c5755ee2cad01dbe8f9c93f3a',
             'dev_requirement' => false,
         ),
         'iwp/mu' => array(
@@ -27,7 +27,7 @@
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '60d9a36af800ef3cd13bf29727b47df8fbea086e',
+            'reference' => 'e05d230166568e3e8e6496dddc40ea2fa7a345b6',
             'dev_requirement' => false,
         ),
         'wp-cli/wp-config-transformer' => array(
