@@ -1,6 +1,18 @@
 <?php
 /**
- * IWP MU Plugin main file
+ * @link              https://instawp.com/
+ * @since             0.0.1
+ * @package           instawp
+ *
+ * @wordpress-plugin
+ * Plugin Name:       IWP MU
+ * Description:       To show Expiry Timer on top bar and Replace Welcome screen with relevant items on the WordPress admin panel.
+ * Version:           1.0.1
+ * Author:            InstaWP Team
+ * Author URI:        https://instawp.com/
+ * License:           GPL-3.0+
+ * License URI:       http://www.gnu.org/copyleft/gpl.html
+ * Text Domain:       iwp-mu
  */
 
 use InstaWP\Connect\Helpers\Helper;
@@ -9,11 +21,11 @@ use InstaWP\Connect\Helpers\Installer;
 defined( 'IWP_MU_PLUGIN_DIR' ) || define( 'IWP_MU_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 defined( 'IWP_MU_PLUGIN_URL' ) || define( 'IWP_MU_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 defined( 'IWP_MU_CACHE_TIMEOUT' ) || define( 'IWP_MU_CACHE_TIMEOUT', 1800 );
-defined( 'IWP_MU_PLUGIN_VERSION' ) || define( 'IWP_MU_PLUGIN_VERSION', '1.0.0' );
+defined( 'IWP_MU_PLUGIN_VERSION' ) || define( 'IWP_MU_PLUGIN_VERSION', '1.0.1' );
 
 class IWP_MU_Main {
 
-	protected static $_instance = null;
+	protected static $_instance       = null;
 	protected static $_script_version = null;
 
 
@@ -23,7 +35,7 @@ class IWP_MU_Main {
 		remove_action( 'welcome_panel', 'wp_welcome_panel', 10 );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
-//		add_action( 'admin_notices', array( $this, 'display_dashboard' ) );
+		// add_action( 'admin_notices', array( $this, 'display_dashboard' ) );
 		add_action( 'welcome_panel', array( $this, 'display_dashboard' ), 10 );
 		add_action( 'admin_init', array( $this, 'handle_dismissible_action' ) );
 		add_action( 'wp_ajax_iwp_install_plugin', array( $this, 'ajax_install_plugin' ) );
@@ -38,7 +50,7 @@ class IWP_MU_Main {
 		$install_nonce  = isset( $_POST['install_nonce'] ) ? sanitize_text_field( $_POST['install_nonce'] ) : '';
 
 		if ( ! wp_verify_nonce( $install_nonce, 'iwp_install_plugin' ) ) {
-			wp_send_json_error( [ 'message' => esc_html__( 'Nonce verification failed!', 'iwp-mu' ) ] );
+			wp_send_json_error( array( 'message' => esc_html__( 'Nonce verification failed!', 'iwp-mu' ) ) );
 		}
 
 		if ( $plugin_action === 'activate' ) {
@@ -46,10 +58,10 @@ class IWP_MU_Main {
 			$activated = activate_plugin( $plugin_file );
 
 			if ( is_wp_error( $activated ) ) {
-				wp_send_json_error( [ 'message' => $activated->get_error_message() ] );
+				wp_send_json_error( array( 'message' => $activated->get_error_message() ) );
 			}
 
-			wp_send_json_success( [ 'message' => esc_html__( 'Successfully activated the plugin.', 'iwp-mu' ) ] );
+			wp_send_json_success( array( 'message' => esc_html__( 'Successfully activated the plugin.', 'iwp-mu' ) ) );
 		}
 
 		$plugin_to_install = array(
@@ -60,17 +72,22 @@ class IWP_MU_Main {
 		if ( ! empty( $plugin_slug ) ) {
 			$plugin_to_install['slug']   = $plugin_slug;
 			$plugin_to_install['source'] = 'wp.org';
-		} else if ( ! empty( $plugin_zip_url ) ) {
+		} elseif ( ! empty( $plugin_zip_url ) ) {
 			$plugin_to_install['slug']   = $plugin_zip_url;
 			$plugin_to_install['source'] = 'url';
 		} else {
-			wp_send_json_error( [ 'message' => esc_html__( 'Missing plugin information.', 'iwp-mu' ) ] );
+			wp_send_json_error( array( 'message' => esc_html__( 'Missing plugin information.', 'iwp-mu' ) ) );
 		}
 
-		$installer = new Installer( [ $plugin_to_install ] );
+		$installer = new Installer( array( $plugin_to_install ) );
 		$response  = $installer->start();
 
-		wp_send_json_success( [ 'message' => esc_html__( 'Successfully installed the plugin.', 'iwp-mu' ), 'response' => $response ] );
+		wp_send_json_success(
+			array(
+				'message'  => esc_html__( 'Successfully installed the plugin.', 'iwp-mu' ),
+				'response' => $response,
+			)
+		);
 	}
 
 	public function handle_dismissible_action() {
@@ -107,8 +124,8 @@ class IWP_MU_Main {
 		wp_register_script( 'iwp-mu-main', plugins_url( '/assets/js/scripts.js', __FILE__ ), array( 'jquery' ), self::$_script_version );
 		wp_localize_script( 'iwp-mu-main', 'iwp_mu_main', $localize_data );
 
-		wp_register_style( 'iwp-mu-tailwind', IWP_MU_PLUGIN_URL . 'assets/css/tailwind.min.css', [], self::$_script_version );
-		wp_register_style( 'iwp-mu-style', IWP_MU_PLUGIN_URL . 'assets/css/style.min.css', [ 'iwp-mu-tailwind' ], self::$_script_version );
+		wp_register_style( 'iwp-mu-tailwind', IWP_MU_PLUGIN_URL . 'assets/css/tailwind.min.css', array(), self::$_script_version );
+		wp_register_style( 'iwp-mu-style', IWP_MU_PLUGIN_URL . 'assets/css/style.min.css', array( 'iwp-mu-tailwind' ), self::$_script_version );
 	}
 
 	public static function instance() {
@@ -120,9 +137,26 @@ class IWP_MU_Main {
 	}
 }
 
-require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+// Prefer instawp-connect plugin autoload (has latest lib), fallback to local vendor
+$connect_autoload = defined( 'WP_PLUGIN_DIR' ) ? WP_PLUGIN_DIR . '/instawp-connect/vendor/autoload.php' : '';
+if ( $connect_autoload && file_exists( $connect_autoload ) ) {
+	require_once $connect_autoload;
+} else {
+	require_once plugin_dir_path( __FILE__ ) . 'vendor/autoload.php';
+}
+
 require_once plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-functions.php';
 require_once plugin_dir_path( __FILE__ ) . 'includes/class-hooks.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/class-mu-auto-updater.php';
 
 IWP_MU_Main::instance();
+
+// Initialize MU Plugin auto-updater
+// Replace the GitHub URL with your actual repository URL
+IWP_MU_Auto_Updater::instance(
+	IWP_MU_PLUGIN_VERSION,
+	'https://github.com/InstaWP/iwp-mu', // TODO: Update with actual GitHub repo URL
+	IWP_MU_PLUGIN_DIR,
+	'iwp-main.php'
+);

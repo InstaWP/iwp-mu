@@ -3,7 +3,7 @@
         'name' => 'iwp/mu',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '147a2291e98cb606f864f7c3b802b009987a91a9',
+        'reference' => 'f78592cdaa8f37f7b3cce4ecb69c4fc7a3a0ce28',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'instawp/connect-helpers' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '7d59e8a9bf40d0bd81a9cabc69f28671d0a6c6d2',
+            'reference' => '2c081214ead38242162d4256852073efe375f984',
             'type' => 'library',
             'install_path' => __DIR__ . '/../instawp/connect-helpers',
             'aliases' => array(
@@ -24,7 +24,7 @@
         'iwp/mu' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '147a2291e98cb606f864f7c3b802b009987a91a9',
+            'reference' => 'f78592cdaa8f37f7b3cce4ecb69c4fc7a3a0ce28',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
