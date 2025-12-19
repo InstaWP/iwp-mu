@@ -142,6 +142,173 @@ if ( ! class_exists( 'IWP_MU' ) ) {
 			add_action( 'welcome_panel', [ $this, 'display_dashboard' ], 10 );
 			add_action( 'admin_init', [ $this, 'handle_dismissible_action' ] );
 			add_action( 'wp_ajax_iwp_install_plugin', [ $this, 'ajax_install_plugin' ] );
+
+			// Hidden admin page for API debug info
+			add_action( 'admin_menu', [ $this, 'register_hidden_page' ] );
+		}
+
+		/**
+		 * Register hidden admin page (no menu item)
+		 */
+		public function register_hidden_page() {
+			add_submenu_page(
+				null, // No parent - hidden page
+				__( 'InstaWP Site Info', 'iwp-mu' ),
+				__( 'InstaWP Site Info', 'iwp-mu' ),
+				'manage_options',
+				'iwp-site-info',
+				[ $this, 'display_site_info_page' ]
+			);
+		}
+
+		/**
+		 * Display hidden site info page with API response
+		 * Access via: /wp-admin/admin.php?page=iwp-site-info
+		 */
+		public function display_site_info_page() {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_die( __( 'You do not have permission to access this page.', 'iwp-mu' ) );
+			}
+
+			// Force refresh if requested
+			if ( isset( $_GET['refresh'] ) && $_GET['refresh'] === '1' ) {
+				delete_option( self::$_transient_key );
+				$this->fetch_site_status();
+				wp_redirect( admin_url( 'admin.php?page=iwp-site-info&refreshed=1' ) );
+				exit;
+			}
+
+			$domain = str_replace( [ 'https://', 'http://' ], '', site_url() );
+			$cached_data = get_option( self::$_transient_key );
+			$welcome_details = get_option( 'iwp_welcome_details' );
+			$api_url = defined( 'JETRAILS_API_URL' ) ? JETRAILS_API_URL : 'https://app.instawp.io/api/v2/';
+
+			?>
+			<div class="wrap">
+				<h1><?php esc_html_e( 'InstaWP Site Info', 'iwp-mu' ); ?></h1>
+
+				<?php if ( isset( $_GET['refreshed'] ) ) : ?>
+					<div class="notice notice-success is-dismissible">
+						<p><?php esc_html_e( 'API data refreshed successfully.', 'iwp-mu' ); ?></p>
+					</div>
+				<?php endif; ?>
+
+				<p>
+					<a href="<?php echo esc_url( admin_url( 'admin.php?page=iwp-site-info&refresh=1' ) ); ?>" class="button button-secondary">
+						<?php esc_html_e( 'Refresh API Data', 'iwp-mu' ); ?>
+					</a>
+				</p>
+
+				<h2><?php esc_html_e( 'API Configuration', 'iwp-mu' ); ?></h2>
+				<table class="widefat striped">
+					<tbody>
+						<tr>
+							<th scope="row" style="width: 200px;"><?php esc_html_e( 'API Base URL', 'iwp-mu' ); ?></th>
+							<td><code><?php echo esc_html( $api_url ); ?></code></td>
+						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Endpoint', 'iwp-mu' ); ?></th>
+							<td><code>sites/get-basic-details?domain=<?php echo esc_html( $domain ); ?></code></td>
+						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Full URL', 'iwp-mu' ); ?></th>
+							<td><code><?php echo esc_html( $api_url . 'sites/get-basic-details?domain=' . $domain ); ?></code></td>
+						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Cache Duration', 'iwp-mu' ); ?></th>
+							<td><?php echo esc_html( IWP_MU_CACHE_TIMEOUT ); ?> seconds (<?php echo esc_html( IWP_MU_CACHE_TIMEOUT / 60 ); ?> minutes)</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h2><?php esc_html_e( 'Cached Site Status', 'iwp-mu' ); ?> <code>instawp_site_status</code></h2>
+				<?php if ( $cached_data ) : ?>
+					<?php
+					$update_time = $cached_data['update_time'] ?? 0;
+					$age_seconds = current_time( 'U' ) - $update_time;
+					$expires_in = max( 0, IWP_MU_CACHE_TIMEOUT - $age_seconds );
+					?>
+					<table class="widefat striped">
+						<tbody>
+							<tr>
+								<th scope="row" style="width: 200px;"><?php esc_html_e( 'Last Updated', 'iwp-mu' ); ?></th>
+								<td>
+									<?php echo esc_html( date( 'Y-m-d H:i:s', $update_time ) ); ?>
+									<em>(<?php printf( esc_html__( '%d seconds ago', 'iwp-mu' ), $age_seconds ); ?>)</em>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Cache Expires In', 'iwp-mu' ); ?></th>
+								<td>
+									<?php if ( $expires_in > 0 ) : ?>
+										<?php printf( esc_html__( '%d seconds (%d minutes)', 'iwp-mu' ), $expires_in, floor( $expires_in / 60 ) ); ?>
+									<?php else : ?>
+										<span style="color: #d63638;"><?php esc_html_e( 'Expired - will refresh on next load', 'iwp-mu' ); ?></span>
+									<?php endif; ?>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<h3><?php esc_html_e( 'API Response Data', 'iwp-mu' ); ?></h3>
+					<pre style="background: #f0f0f1; padding: 15px; overflow: auto; max-height: 400px; border: 1px solid #c3c4c7; border-radius: 4px;"><?php
+						echo esc_html( json_encode( $cached_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
+					?></pre>
+				<?php else : ?>
+					<p><em><?php esc_html_e( 'No cached data available. Click "Refresh API Data" to fetch.', 'iwp-mu' ); ?></em></p>
+				<?php endif; ?>
+
+				<h2><?php esc_html_e( 'Welcome Details', 'iwp-mu' ); ?> <code>iwp_welcome_details</code></h2>
+				<?php if ( $welcome_details ) : ?>
+					<pre style="background: #f0f0f1; padding: 15px; overflow: auto; max-height: 400px; border: 1px solid #c3c4c7; border-radius: 4px;"><?php
+						// Mask password for display
+						$display_details = $welcome_details;
+						if ( isset( $display_details['site']['password'] ) ) {
+							$display_details['site']['password'] = '********';
+						}
+						echo esc_html( json_encode( $display_details, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ) );
+					?></pre>
+				<?php else : ?>
+					<p><em><?php esc_html_e( 'No welcome details configured.', 'iwp-mu' ); ?></em></p>
+				<?php endif; ?>
+
+				<h2><?php esc_html_e( 'Plugin Info', 'iwp-mu' ); ?></h2>
+				<table class="widefat striped">
+					<tbody>
+						<tr>
+							<th scope="row" style="width: 200px;"><?php esc_html_e( 'Plugin Version', 'iwp-mu' ); ?></th>
+							<td><?php echo esc_html( IWP_MU_PLUGIN_VERSION ); ?></td>
+						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Site URL', 'iwp-mu' ); ?></th>
+							<td><code><?php echo esc_html( site_url() ); ?></code></td>
+						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Domain (for API)', 'iwp-mu' ); ?></th>
+							<td><code><?php echo esc_html( $domain ); ?></code></td>
+						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Welcome Panel Dismissed', 'iwp-mu' ); ?></th>
+							<td>
+								<?php
+								$dismissed = get_user_meta( get_current_user_id(), 'iwp_welcome_panel_dismissed', true );
+								echo $dismissed ? esc_html__( 'Yes', 'iwp-mu' ) : esc_html__( 'No', 'iwp-mu' );
+								?>
+								<?php if ( $dismissed ) : ?>
+									<a href="<?php echo esc_url( add_query_arg( 'iwp_clean', 'yes', admin_url() ) ); ?>" class="button button-small">
+										<?php esc_html_e( 'Reset', 'iwp-mu' ); ?>
+									</a>
+								<?php endif; ?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<p style="margin-top: 20px; color: #646970;">
+					<em><?php esc_html_e( 'Access this page via:', 'iwp-mu' ); ?> <code><?php echo esc_html( admin_url( 'admin.php?page=iwp-site-info' ) ); ?></code></em>
+				</p>
+			</div>
+			<?php
 		}
 
 		/**
