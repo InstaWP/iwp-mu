@@ -145,6 +145,11 @@ if ( ! class_exists( 'IWP_MU' ) ) {
 
 			// Hidden admin page for API debug info
 			add_action( 'admin_menu', [ $this, 'register_hidden_page' ] );
+
+			// Admin bar expiry timer
+			add_action( 'admin_bar_menu', [ $this, 'add_admin_bar_timer' ], 100 );
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_timer_assets' ] );
+			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_timer_assets' ] );
 		}
 
 		/**
@@ -159,6 +164,158 @@ if ( ! class_exists( 'IWP_MU' ) ) {
 				'iwp-site-info',
 				[ $this, 'display_site_info_page' ]
 			);
+		}
+
+		/**
+		 * Add expiry timer to admin bar
+		 */
+		public function add_admin_bar_timer( $wp_admin_bar ) {
+			$site_status = $this->get_site_status();
+
+			// Don't show timer for permanent/reserved sites
+			if ( empty( $site_status ) || ( $site_status['current_status'] ?? '' ) === 'permanent' ) {
+				return;
+			}
+
+			$remaining_secs = (int) ( $site_status['remaining_secs'] ?? 0 );
+			if ( $remaining_secs <= 0 ) {
+				return;
+			}
+
+			$time_left = iwp_get_time_left( $remaining_secs );
+			$site_type = $site_status['type'] ?? 'user-site';
+
+			// Format display time
+			$display_time = sprintf(
+				'%02dd %02d:%02d:%02d',
+				$time_left['days'],
+				$time_left['hours'],
+				$time_left['minutes'],
+				$time_left['seconds']
+			);
+
+			$wp_admin_bar->add_node( [
+				'id'    => 'iwp-expiry-timer',
+				'title' => '<span class="iwp-timer-clock"></span><span class="iwp-timer-text" data-seconds="' . esc_attr( $remaining_secs ) . '">' . esc_html( $display_time ) . '</span>',
+				'href'  => admin_url( 'admin.php?page=iwp-site-info' ),
+				'meta'  => [
+					'class' => 'iwp-expiry-timer-node',
+					'title' => sprintf( __( 'Site expires in %s', 'iwp-mu' ), $display_time ),
+				],
+			] );
+
+			// Add submenu with more info
+			$wp_admin_bar->add_node( [
+				'id'     => 'iwp-expiry-timer-info',
+				'parent' => 'iwp-expiry-timer',
+				'title'  => '<div class="iwp-timer-dropdown">' .
+					'<div class="iwp-timer-icon">🌐</div>' .
+					'<div class="iwp-timer-details">' .
+						'<div class="iwp-timer-type">' . esc_html( ucwords( str_replace( '-', ' ', $site_type ) ) ) . '</div>' .
+						'<div class="iwp-timer-remaining">' . esc_html__( 'Time remaining:', 'iwp-mu' ) . ' <span class="iwp-timer-countdown" data-seconds="' . esc_attr( $remaining_secs ) . '">' . esc_html( $display_time ) . '</span></div>' .
+					'</div>' .
+				'</div>',
+				'href'   => admin_url( 'admin.php?page=iwp-site-info' ),
+			] );
+		}
+
+		/**
+		 * Enqueue timer CSS and JS
+		 */
+		public function enqueue_timer_assets() {
+			if ( ! is_admin_bar_showing() ) {
+				return;
+			}
+
+			$site_status = $this->get_site_status();
+			if ( empty( $site_status ) || ( $site_status['current_status'] ?? '' ) === 'permanent' ) {
+				return;
+			}
+
+			// Inline CSS for admin bar timer
+			$css = '
+				#wpadminbar .iwp-expiry-timer-node > a {
+					background: #fff !important;
+					color: #1d2327 !important;
+					font-weight: 600;
+					height: 32px;
+					display: flex !important;
+					align-items: center;
+					padding: 0 10px !important;
+				}
+				#wpadminbar .iwp-expiry-timer-node > a:hover {
+					background: #f0f0f1 !important;
+				}
+				#wpadminbar .iwp-timer-clock {
+					width: 12px;
+					height: 12px;
+					border-radius: 50%;
+					background: #dc3232;
+					margin-right: 8px;
+					animation: iwp-pulse 2s infinite;
+				}
+				#wpadminbar .iwp-timer-text {
+					font-family: monospace;
+					font-size: 12px;
+				}
+				#wpadminbar .iwp-timer-dropdown {
+					display: flex;
+					align-items: flex-start;
+					padding: 10px;
+					min-width: 200px;
+					background: #fff;
+					color: #1d2327;
+				}
+				#wpadminbar .iwp-timer-icon {
+					font-size: 24px;
+					margin-right: 10px;
+				}
+				#wpadminbar .iwp-timer-type {
+					font-weight: 600;
+					margin-bottom: 4px;
+				}
+				#wpadminbar .iwp-timer-remaining {
+					font-size: 12px;
+					color: #646970;
+				}
+				#wpadminbar .iwp-timer-countdown {
+					color: #dc3232;
+					font-weight: 600;
+					font-family: monospace;
+				}
+				@keyframes iwp-pulse {
+					0%, 100% { opacity: 1; }
+					50% { opacity: 0.5; }
+				}
+			';
+			wp_add_inline_style( 'admin-bar', $css );
+
+			// Inline JS for countdown
+			$js = '
+				(function() {
+					function updateTimer() {
+						var elements = document.querySelectorAll("[data-seconds]");
+						elements.forEach(function(el) {
+							var secs = parseInt(el.getAttribute("data-seconds"), 10);
+							if (secs > 0) {
+								secs--;
+								el.setAttribute("data-seconds", secs);
+								var d = Math.floor(secs / 86400);
+								var h = Math.floor((secs % 86400) / 3600);
+								var m = Math.floor((secs % 3600) / 60);
+								var s = secs % 60;
+								var text = (d < 10 ? "0" : "") + d + "d " +
+									(h < 10 ? "0" : "") + h + ":" +
+									(m < 10 ? "0" : "") + m + ":" +
+									(s < 10 ? "0" : "") + s;
+								el.textContent = text;
+							}
+						});
+					}
+					setInterval(updateTimer, 1000);
+				})();
+			';
+			wp_add_inline_script( 'admin-bar', $js );
 		}
 
 		/**
