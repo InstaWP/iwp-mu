@@ -2,7 +2,7 @@
 /**
  * Plugin Name: InstaWP MU
  * Description: Welcome dashboard and site status for InstaWP sites
- * Version: 2.0.0
+ * Version: 3.0.0
  * Author: InstaWP
  * License: GPL-2.0+
  */
@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 // Constants
 defined( 'IWP_MU_CACHE_TIMEOUT' ) || define( 'IWP_MU_CACHE_TIMEOUT', 1800 ); // 30 minutes
-defined( 'IWP_MU_PLUGIN_VERSION' ) || define( 'IWP_MU_PLUGIN_VERSION', '2.0.0' );
+defined( 'IWP_MU_PLUGIN_VERSION' ) || define( 'IWP_MU_PLUGIN_VERSION', '3.0.0' );
 
 // ============================================================================
 // Helper Functions

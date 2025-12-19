@@ -50,6 +50,7 @@ The plugin reads configuration from the `iwp_welcome_details` WordPress option:
 
 ## Version
 
+- **v3.0.0** - Added hidden site info debug page
 - **v2.0.0** - Consolidated to single file, removed dependencies
 - **v1.0.0** - Original multi-file version
 
